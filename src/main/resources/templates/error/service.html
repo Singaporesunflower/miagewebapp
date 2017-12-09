@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/common :: [//head]" />
+
+<body>
+	<h1>Service Error Page</h1>
+
+	<p th:if="${exception.date}" id='created'>
+		<b>Occurred:</b> <span th:text="${exception.date}">Timestamp</span><br />
+		<b>Occurred:</b> <span th:text="${{exception.date}}">Timestamp</span>
+	</p>
+
+	<div>
+		<b>Cause:</b>
+		<span th:if="${exception}" th:text="${exception}">exception ...</span>
+		<blockquote>
+			<i>Note: You would never generate a page that displays a Java exception to an end-user in a real application</i>
+		</blockquote>
+	</div>
+
+	<!-- Scripts includes are placed at the end of the document so the pages load faster -->
+	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>	
+</body>
+</html>

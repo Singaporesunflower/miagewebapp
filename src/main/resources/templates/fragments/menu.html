@@ -1,0 +1,15 @@
+<div class="container">
+	<div class="row">
+		<ul class="nav nav-pills">
+		  <li class="nav-item">
+		    <a th:class="${#strings.equals(#locale.language,'en')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=en}">English</a>
+		  </li>
+		  <li class="nav-item">
+		    <a th:class="${#strings.equals(#locale.language,'fr')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=fr}">Français</a>
+		  </li>
+		  <li class="nav-item">
+		    <a th:class="${#strings.equals(#locale.language,'de')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=de}">Deutsch</a>
+		  </li>
+		</ul>
+	</div>
+</div>

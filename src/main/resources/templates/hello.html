@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
+
+<head th:include="fragments/common :: [//head]" />
+
+<body>
+
+	<div th:replace="fragments/menu" ></div>
+
+	<div class="container">	
+	    <p th:text="'Hello, ' + ${name} + '!'" />
+	    <p th:text="|Hey! #{greetings}|" />
+
+	    <p th:text="#{inquiry}" />
+	    <p th:text="#{farewell}" />
+	    
+	    <p th:text="'#locale.language=' + ${#locale.language}" />
+		<p th:text="'localLanguage=' + ${localeLanguage}" />
+		<p th:text="'session.lang=' + ${session.lang}" />
+	</div>
+
+	<!-- Footer -->
+	<div th:replace="fragments/common :: [//div[@class='footer']]"></div>
+	   	
+	<!-- Scripts includes are placed at the end of the document so the pages load faster -->
+	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>	
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+  console.log('Hello page loaded');
+});
+</script>
+</html>
