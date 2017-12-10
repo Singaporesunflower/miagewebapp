@@ -9,5 +9,5 @@ public interface CategoryService {
     void delete(Long id);
     List<Category> findAll();
     Category findById(Long id);
-    List<Category> findByName(String name);
+    Category findByName(String name);
 }

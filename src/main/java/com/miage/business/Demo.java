@@ -9,20 +9,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.miage.business.model.Category;
 import com.miage.business.model.Person;
 import com.miage.business.model.PersonGroup;
 import com.miage.business.model.Role;
 import com.miage.business.repository.GroupRepository;
 import com.miage.business.repository.PersonRepository;
 import com.miage.business.repository.RoleRepository;
+import com.miage.business.service.CategoryService;
 
 //@Configuration
 //@EnableAutoConfiguration
@@ -44,6 +42,9 @@ public class Demo implements CommandLineRunner {
 	
 	@Autowired
 	GroupRepository groupRepository;
+	
+	@Autowired
+	CategoryService categoryService;
 
 	@Override
 	@Transactional
@@ -62,25 +63,38 @@ public class Demo implements CommandLineRunner {
 			LOGGER.info("ROLE_USER created");
 		}
 
+		// Person / roles
 		Person person = null;
 		List<Person> persons = personRepository.findByFirstNameAndLastName("John", "McLane");
 		if (CollectionUtils.isEmpty(persons)) {
 			person = new Person("John", "McLane");
 	    	personRepository.save(person);
 	    	LOGGER.info("Person created");
+	    	
+			personRepository.updateRole(person, roleAdmin);
+			LOGGER.info("role updated");
 		}
 		else {
 			person = persons.get(0);
 		}
-		personRepository.updateRole(person, roleAdmin);
 		
+		// Person / groups
 		PersonGroup personGroup1 =  groupRepository.findByName("Group1");
 		if (personGroup1 == null) {
 			personGroup1 = new PersonGroup("Group1");
 	    	groupRepository.save(personGroup1);
 	    	LOGGER.info("PersonGroup created");
+	    	
+	    	personRepository.addGroupToPerson(person, personGroup1);
+	    	LOGGER.info("group person added");
 		}
-    	personRepository.addGroupToPerson(person, personGroup1);
-//		personRepository.addPersonToGroup(personGroup1, person);
+		
+		// Product categories
+		Category categoryFruits =  categoryService.findByName("Fruits");
+		if (categoryFruits == null) {
+			final Category category = new Category("Fruits");
+			categoryService.save(category);
+			LOGGER.info("Category created");
+		}
 	}
 }
