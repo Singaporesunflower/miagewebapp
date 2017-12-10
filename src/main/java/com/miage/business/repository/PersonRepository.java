@@ -12,7 +12,7 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Long>, PersonRepositoryCustom {
 
 	List<Person> findByLastName(String lastName);
-	List<Person> findByLastNameAndFirstName(String lastName, String firstName);
+	List<Person> findByFirstNameAndLastName(String firstName, String lastName);
 	
     @Query("select p from Person p where p.role.name = :roleName order by p.lastName, p.firstName")
     List<Person> findByRole(@Param("roleName") String roleName);

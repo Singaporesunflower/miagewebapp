@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,17 +16,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.miage.business.model.Role;
-import com.miage.business.repository.CategoryRepository;
-import com.miage.business.repository.RoleRepository;
  
 @Configuration
 @EnableAutoConfiguration
@@ -41,31 +34,6 @@ public class SpringBusinessConfig {
 	
     @Autowired
     private Environment environment;
-    
-    @Bean
-	public CommandLineRunner demo(RoleRepository roleRepository, CategoryRepository categoryRepository) {
-		return (args) -> {
-			// roles
-			Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
-			Role roleUser = roleRepository.findByName("ROLE_USER");
-			if (roleAdmin == null) {
-				roleAdmin = new Role("ROLE_ADMIN");
-				roleRepository.save(roleAdmin);
-				LOGGER.info("ROLE_ADMIN created");
-			}
-			else {
-				LOGGER.info("ROLE_ADMIN found");
-			}
-			if (roleUser == null) {
-				roleUser = new Role("ROLE_USER");
-				roleRepository.save(roleUser);
-				LOGGER.info("ROLE_USER created");
-			}
-			else {
-				LOGGER.info("ROLE_USER found");
-			}
-		};
-	}
     
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

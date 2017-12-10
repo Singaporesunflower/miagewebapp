@@ -1,11 +1,14 @@
 package com.miage.business.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -37,8 +40,13 @@ public class Person implements Serializable {
     @Min(18)
     private Integer age;
 
+    // This field exists in the DB
+    // Person contains a foreign key to role
 	@ManyToOne
 	private Role role;
+	
+	@ManyToMany
+	private List<PersonGroup> groups = new ArrayList<>(0);
     
     public Person() {
 	}	
@@ -110,6 +118,14 @@ public class Person implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public List<PersonGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<PersonGroup> groups) {
+		this.groups = groups;
 	}
 
 	public String toString() {

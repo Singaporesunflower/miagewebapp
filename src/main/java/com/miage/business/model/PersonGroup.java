@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -17,25 +17,23 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
-public class Role implements Serializable {
-	
+public class PersonGroup implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotNull
-	@Size(min = 2, max = 10)
+	@Size(min = 2, max = 20)
 	private String name;
-	
-	// This field doesn't exist in the database
-    // It is simulated with a SQL query
-	@OneToMany(mappedBy="role", fetch=FetchType.LAZY)
+
+	@ManyToMany(mappedBy="groups", fetch=FetchType.LAZY)
 	private List<Person> persons = new ArrayList<>(0);
 	
-	public Role() {
+	public PersonGroup() {
 	}
 	
-	public Role(String name) {
+	public PersonGroup(String name) {
 		this.name = name;
 	}
 	
@@ -62,5 +60,5 @@ public class Role implements Serializable {
 	public void setPersons(List<Person> persons) {
 		this.persons = persons;
 	}
-
+	
 }
