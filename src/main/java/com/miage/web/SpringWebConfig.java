@@ -53,7 +53,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
         registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/login").setViewName("login");
+        
+        // TODO enable SpringSecurity
+//        registry.addViewController("/login").setViewName("login");
     }
 	
 	// Resources
@@ -139,6 +141,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
 
+		// TODO enable SpringSecurity
 		// To use <sec:> namespace in Thymeleaf
 		Set<IDialect> additionalDialects = new HashSet<IDialect>();
 	    additionalDialects.add(new SpringSecurityDialect());
