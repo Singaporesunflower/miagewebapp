@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -44,6 +44,14 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	@Value("#{T(java.lang.Boolean).parseBoolean('${thymeleaf.cache}')}")
 	private Boolean thymeleafCache;
 
+	// Views
+	@Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("home");
+        registry.addViewController("/home").setViewName("home");
+        registry.addViewController("/login").setViewName("login");
+    }
+	
 	// Resources
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -72,12 +80,14 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         messageSource.setCacheSeconds(0);
         return messageSource;
     }
+    // Intercept parameter language in URL
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("lang");
 		registry.addInterceptor(localeChangeInterceptor);
 	}
+	// Locale is stored in session
 	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver result = new SessionLocaleResolver();

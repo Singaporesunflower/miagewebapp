@@ -3,7 +3,10 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
 	
-	<body>
-		Congratulations! You are old enough to sign up for this site.
-	</body>
+    <body>
+        <h1>Welcome!</h1>
+
+        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+    </body>
+
 </html>

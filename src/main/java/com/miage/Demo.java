@@ -46,17 +46,17 @@ public class Demo implements CommandLineRunner {
 	@Transactional
 	public void run(String... arg0) throws Exception {
 		// roles
-		Role roleAdmin = roleRepository.findByName("ROLE_ADMIN");
-		Role roleUser = roleRepository.findByName("ROLE_USER");
+		Role roleAdmin = roleRepository.findByName("ADMIN");
+		Role roleUser = roleRepository.findByName("USER");
 		if (roleAdmin == null) {
-			roleAdmin = new Role("ROLE_ADMIN");
+			roleAdmin = new Role("ADMIN");
 			roleRepository.save(roleAdmin);
-			LOGGER.info("ROLE_ADMIN created");
+			LOGGER.info("ADMIN created");
 		}
 		if (roleUser == null) {
-			roleUser = new Role("ROLE_USER");
+			roleUser = new Role("USER");
 			roleRepository.save(roleUser);
-			LOGGER.info("ROLE_USER created");
+			LOGGER.info("USER created");
 		}
 
 		// Person / roles

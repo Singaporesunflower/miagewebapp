@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
-
+	
 <head th:include="fragments/common :: [//head]" />
 
 <body>
