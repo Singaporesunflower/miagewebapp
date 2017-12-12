@@ -139,7 +139,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
 
-		// To use sec namespace in Thymeleaf
+		// To use <sec:> namespace in Thymeleaf
 		Set<IDialect> additionalDialects = new HashSet<IDialect>();
 	    additionalDialects.add(new SpringSecurityDialect());
 		templateEngine.setAdditionalDialects(additionalDialects);
