@@ -1,4 +1,4 @@
-package com.miage.business;
+package com.miage;
 
 import java.util.List;
 
@@ -22,10 +22,6 @@ import com.miage.business.repository.PersonRepository;
 import com.miage.business.repository.RoleRepository;
 import com.miage.business.service.CategoryService;
 
-//@Configuration
-//@EnableAutoConfiguration
-//@ComponentScan("com.miage.business")
-//@EnableTransactionManagement
 @Component
 public class Demo implements CommandLineRunner {
 
