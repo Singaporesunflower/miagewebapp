@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
+	
+<head th:include="fragments/common :: [//head]" />
+
+<body>
+
+	<div th:replace="fragments/menu" ></div>
+
+	<div class="container">	
+	
+		<h1 th:text="#{persons}" />
+	    <a th:href="@{/person/create}" th:text="#{createPerson}" class="btn btn-success" />
+	    <br />
+	    <br />
+	    <ul>
+	    	<li th:each="person : ${persons}">
+	    		<span th:text="${person.firstName}"></span>
+	    		<span th:text="${person.lastName}"></span>
+	    	</li>
+	    </ul>
+	    
+    </div>
+	    
+	<!-- Footer -->
+	<div th:replace="fragments/common :: [//div[@class='footer']]"></div>
+	   	
+	<!-- Scripts includes are placed at the end of the document so the pages load faster -->
+	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>	
+</body>
+</html>

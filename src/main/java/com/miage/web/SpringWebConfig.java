@@ -1,7 +1,9 @@
 package com.miage.web;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Set;
 
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -123,7 +127,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
 		templateResolver.setPrefix("classpath:/templates/");
 		templateResolver.setSuffix(".html");
-//		TemplateMode.HTML
+		// in Spring 5 : use instead TemplateMode.HTML
 		templateResolver.setTemplateMode("HTML5");
 		templateResolver.setCacheable(thymeleafCache);
 		return templateResolver;
@@ -135,21 +139,18 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(templateResolver());
 
-		// Enabling the SpringEL compiler with Spring 4.2.4 or newer can
-		// speed up execution in most scenarios, but might be incompatible
-		// with specific cases when expressions in one template are reused
-		// across different data types, so this flag is "false" by default
-		// for safer backwards compatibility.
-		
-//		templateEngine.setEnableSpringELCompiler(true);
+		// To use sec namespace in Thymeleaf
+		Set<IDialect> additionalDialects = new HashSet<IDialect>();
+	    additionalDialects.add(new SpringSecurityDialect());
+		templateEngine.setAdditionalDialects(additionalDialects);
 		
 		return templateEngine;
 	}
+	
 	@Bean
 	public ThymeleafViewResolver viewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setTemplateEngine(templateEngine());
 		return viewResolver;
 	}
-
 }

@@ -2,39 +2,45 @@ package com.miage.web.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.miage.business.model.Person;
+import com.miage.business.service.PersonService;
 
 @Controller
 @RequestMapping("/person")
 public class PersonController {
 
-	@RequestMapping(method = RequestMethod.GET)
-    public String showFormPerson(Model model) {
-    	model.addAttribute("person", new Person());
-        return "person/form";
-    }
-    
-    @GetMapping("/results")
-    public String showResult() {
-        return "person/results";
-    }
+	@Autowired
+	PersonService personService;
+		
+	@RequestMapping(method=RequestMethod.GET)
+	public String findAll(Model model) {
+		model.addAttribute("persons", personService.findAll());
+		return "person/list";
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create(Model model) {
+		model.addAttribute("person", new Person());
+		return "person/form";
+	}
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String checkPersonInfo(@Valid @ModelAttribute Person person, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String submitCreate(@Valid @ModelAttribute Person person, BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
             return "person/form";
         }
 
-        return "redirect:/person/results";
-    }
+		personService.save(person);
+		return "redirect:/person";
+	}
 
 }

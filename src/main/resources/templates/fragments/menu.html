@@ -6,7 +6,10 @@
 				<li class="nav-item">
 				    <a th:href="@{/hello}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/hello')} ? 'nav-link active' : 'nav-link'">Hello</a>
 				</li>
-				<li class="nav-item">
+				<li sec:authorize="hasRole('ADMIN')" class="nav-item">
+				    <a th:href="@{/person}" th:text="#{persons}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/person')} ? 'nav-link active' : 'nav-link'" />
+				</li>
+				<li sec:authorize="hasRole('USER')" class="nav-item">
 				    <a th:href="@{/product}" th:text="#{products}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/product')} ? 'nav-link active' : 'nav-link'" />
 				</li>
 			</ul>
@@ -26,8 +29,8 @@
 			</ul>
 		</div>
 		
-		<div th:if="${#httpServletRequest.remoteUser}" sec:authorize="isAuthenticated()">
-			<div sec:authorize="hasRole('USER')" class="col-sm">
+		<div sec:authorize="!isAnonymous()">
+			<div class="col-sm">
 				<div class="dropdown">
 		  			<button th:text="${#httpServletRequest.remoteUser}" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
