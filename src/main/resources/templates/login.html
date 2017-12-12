@@ -3,28 +3,42 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
 
-<!-- <head th:include="fragments/common :: [//head]" /> -->
+<head th:include="fragments/common :: [//head]" />
 
 <body>
+	
+	<div class="container">
 
-<!-- 	<div th:replace="fragments/menu" ></div> -->
+		<div class="row">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Sign in</h3>
+				</div>
+				<div class="panel-body">
+					<form th:action="@{/login}" method="post">
+						<div class="form-group">
+							<div th:if="${param.error}">Invalid login or password</div>
+							<div th:if="${param.logout}">You have been disconnected</div>
+						</div>
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="Login" name="username" type="text" autofocus="autofocus" />
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="Password" name="password" type="password" />
+							</div>
+							<button type="submit" class="btn btn-success">Sign in</button>
+							<a th:href="@{/}" class="btn btn-default">Cancel</a>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
 
-	<div class="container">	
-		<div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
-        </form>
-	</div>
-
+    </div>
+	
 	<!-- Scripts includes are placed at the end of the document so the pages load faster -->
-<!-- 	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>	 -->
+	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>
 </body>
 
 </html>

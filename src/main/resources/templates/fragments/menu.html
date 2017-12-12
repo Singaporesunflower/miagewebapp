@@ -1,15 +1,43 @@
 <div class="container">
 	<div class="row">
-		<ul class="nav nav-pills">
-		  <li class="nav-item">
-		    <a th:class="${#strings.equals(#locale.language,'en')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=en}">English</a>
-		  </li>
-		  <li class="nav-item">
-		    <a th:class="${#strings.equals(#locale.language,'fr')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=fr}">Français</a>
-		  </li>
-		  <li class="nav-item">
-		    <a th:class="${#strings.equals(#locale.language,'de')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=de}">Deutsch</a>
-		  </li>
-		</ul>
+		
+		<div class="col-sm">
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+				    <a th:href="@{/hello}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/hello')} ? 'nav-link active' : 'nav-link'">Hello</a>
+				</li>
+				<li class="nav-item">
+				    <a th:href="@{/product}" th:text="#{products}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/product')} ? 'nav-link active' : 'nav-link'" />
+				</li>
+			</ul>
+		</div>
+		
+		<div class="col-sm">
+			<ul class="nav nav-pills">
+			  <li class="nav-item">
+			    <a th:class="${#strings.equals(#locale.language,'en')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=en}">English</a>
+			  </li>
+			  <li class="nav-item">
+			    <a th:class="${#strings.equals(#locale.language,'fr')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=fr}">Français</a>
+			  </li>
+			  <li class="nav-item">
+			    <a th:class="${#strings.equals(#locale.language,'de')} ? 'nav-link active' : 'nav-link'" th:href="@{?lang=de}">Deutsch</a>
+			  </li>
+			</ul>
+		</div>
+		
+		<div th:if="${#httpServletRequest.remoteUser}" sec:authorize="isAuthenticated()">
+			<div sec:authorize="hasRole('USER')" class="col-sm">
+				<div class="dropdown">
+		  			<button th:text="${#httpServletRequest.remoteUser}" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		    			<a class="dropdown-item" href="#" th:text="#{profile}" />
+						<form th:action="@{/logout}" method="post" class="px-2 py-1">
+			        		<button type="submit" class="btn btn-link" th:text="#{signOut}" />
+	        			</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

@@ -26,10 +26,13 @@
 	   	
 	<!-- Scripts includes are placed at the end of the document so the pages load faster -->
 	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>	
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+  			console.log('Hello page loaded');
+		});
+	</script>
+
 </body>
-<script type="text/javascript">
-$(document).ready(function() {
-  console.log('Hello page loaded');
-});
-</script>
+
 </html>
