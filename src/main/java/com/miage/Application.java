@@ -17,9 +17,6 @@ import com.miage.rest.SpringRestConfig;
 import com.miage.web.SpringWebConfig;
 
 @SpringBootApplication
-//@Configuration
-//@EnableAutoConfiguration
-//@ComponentScan
 public class Application extends SpringBootServletInitializer { // implements WebApplicationInitializer {
 
 	public static final String MAPPING_WEB = "/*";

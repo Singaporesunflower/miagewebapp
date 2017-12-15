@@ -60,20 +60,25 @@ public class Demo implements CommandLineRunner {
 		}
 
 		// Person / roles
-		Person person = null;
-		List<Person> persons = personRepository.findByFirstNameAndLastName("John", "McLane");
-		if (CollectionUtils.isEmpty(persons)) {
-			person = new Person("John", "McLane");
-	    	personRepository.save(person);
-	    	LOGGER.info("Person created");
+		Person personAdmin = personRepository.findByLogin("admin");
+		if (personAdmin == null) {
+			personAdmin = new Person("admin", "admin", "John", "McLane", "jmclane@hotmail.com");
+	    	personRepository.save(personAdmin);
+	    	LOGGER.info("Admin created");
 	    	
-			personRepository.updateRole(person, roleAdmin);
-			LOGGER.info("role updated");
+			personRepository.updateRole(personAdmin, roleAdmin);
+			LOGGER.info("admin role updated");
 		}
-		else {
-			person = persons.get(0);
+		Person personUser = personRepository.findByLogin("user");
+		if (personUser == null) {
+			personUser = new Person("user", "user", "Pam", "Anderson", "pam@hotmail.com");
+	    	personRepository.save(personUser);
+	    	LOGGER.info("User created");
+	    	
+			personRepository.updateRole(personUser, roleUser);
+			LOGGER.info("person role updated");
 		}
-		
+
 		// Person / groups
 		PersonGroup personGroup1 =  groupRepository.findByName("Group1");
 		if (personGroup1 == null) {
@@ -81,7 +86,7 @@ public class Demo implements CommandLineRunner {
 	    	groupRepository.save(personGroup1);
 	    	LOGGER.info("PersonGroup created");
 	    	
-	    	personRepository.addGroupToPerson(person, personGroup1);
+	    	personRepository.addGroupToPerson(personAdmin, personGroup1);
 	    	LOGGER.info("group person added");
 		}
 		

@@ -41,6 +41,11 @@ public class PersonServiceImpl implements PersonService {
 	}
 	
 	@Override
+	public Person findByLogin(String login) {
+		return personRepository.findByLogin(login);
+	}
+	
+	@Override
 	public List<Person> findByFirstNameAndLastName(String firstName, String lastName) throws ServiceException {
 		return personRepository.findByFirstNameAndLastName(firstName, lastName);
 	}

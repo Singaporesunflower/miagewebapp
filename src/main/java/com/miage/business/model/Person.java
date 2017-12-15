@@ -10,18 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.miage.utils.PasswordUtils;
+
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"login"})})
 public class Person implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Boolean active = Boolean.FALSE;
+	@NotNull
+	private Boolean active = Boolean.TRUE;
 	
     @NotNull
     @Size(min=2, max=30)
@@ -31,10 +37,14 @@ public class Person implements Serializable {
     @Size(min=2, max=30)
     private String lastName;
     
-    @Size(min=10, max=20)
+    @NotNull
+    @Size(min=2, max=50)
+    private String email;
+    
+    @NotNull
+    @Size(min=2, max=20)
     private String login;
     
-    @Size(min=8, max=20)
     private String password;
     
     @Min(18)
@@ -51,9 +61,12 @@ public class Person implements Serializable {
     public Person() {
 	}	
 	
-    public Person(String firstName, String lastName) {
+    public Person(String login, String password, String firstName, String lastName, String email) {
+    	this.login = login;
+		this.password = PasswordUtils.hashPassword(password);
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
 	}
 
 	public Long getId() {
@@ -86,6 +99,14 @@ public class Person implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getLogin() {

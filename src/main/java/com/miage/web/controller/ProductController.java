@@ -3,6 +3,8 @@ package com.miage.web.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,9 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	// TODO Enable method security
+	//@Secured("ADMIN") // securedEnabled = true
+	//@PreAuthorize("hasAuthority('ADMIN')") // prePostEnabled = true
 	@RequestMapping(method=RequestMethod.GET)
 	public String findAll(Model model) {
 		model.addAttribute("products", productService.findAll());

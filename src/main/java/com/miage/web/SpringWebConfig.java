@@ -1,22 +1,30 @@
 package com.miage.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.catalina.connector.Connector;
+import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -56,6 +64,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         
         // TODO enable SpringSecurity
 //        registry.addViewController("/login").setViewName("login");
+        
+        // TODO enable Exception handling
+//        registry.addViewController("/403").setViewName("error/403");
     }
 	
 	// Resources
@@ -107,19 +118,25 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	public SimpleMappingExceptionResolver exceptionResolver() {
 		SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
 
+		// Map exception with view
 		Properties exceptionMappings = new Properties();
 		exceptionMappings.put("com.miage.business.exception.RepositoryException", "error/repository");
 		exceptionMappings.put("com.miage.business.exception.ServiceException", "error/service");
 		// exceptionMappings.put("java.lang.Exception", "error/error");
 		// exceptionMappings.put("java.lang.RuntimeException", "error/error");
 		exceptionResolver.setExceptionMappings(exceptionMappings);
-		exceptionResolver.setDefaultErrorView("error/error");
 
+		// TODO enable Exception handling
+//		exceptionResolver.setExcludedExceptions(AccessDeniedException.class);
+		
+		// Map status code with view
 		Properties statusCodes = new Properties();
 		statusCodes.put("error/custom", "404");
 		statusCodes.put("error/error", "500");
 		exceptionResolver.setStatusCodes(statusCodes);
 
+		exceptionResolver.setDefaultErrorView("error/error");
+		
 		return exceptionResolver;
 	}
 
@@ -143,9 +160,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 
 		// TODO enable SpringSecurity
 		// To use <sec:> namespace in Thymeleaf
-		Set<IDialect> additionalDialects = new HashSet<IDialect>();
-	    additionalDialects.add(new SpringSecurityDialect());
-		templateEngine.setAdditionalDialects(additionalDialects);
+//		Set<IDialect> additionalDialects = new HashSet<IDialect>();
+//	    additionalDialects.add(new SpringSecurityDialect());
+//		templateEngine.setAdditionalDialects(additionalDialects);
 		
 		return templateEngine;
 	}
@@ -156,4 +173,31 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setTemplateEngine(templateEngine());
 		return viewResolver;
 	}
+	
+	// TODO enable SSL
+//    @Bean
+//    public EmbeddedServletContainerFactory servletContainer() {
+//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+//        tomcat.addAdditionalTomcatConnectors(createSslConnector());
+//        return tomcat;
+//    }
+//    private Connector createSslConnector() {
+//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
+//        try {
+//            File keystore = new ClassPathResource("keystore.p12").getFile();
+//            connector.setScheme("https");
+//            connector.setSecure(true);
+//            connector.setPort(8443);
+//            protocol.setSSLEnabled(true);
+//            protocol.setKeystoreFile(keystore.getAbsolutePath());
+//            protocol.setKeystorePass("Passw0rd");
+//            protocol.setKeystoreType("PKCS12");
+//            protocol.setKeyAlias("tomcat");
+//            return connector;
+//        }
+//        catch (IOException ex) {
+//            throw new IllegalStateException("can't access keystore: [keystore] or truststore: [" + "keystore" + "]", ex);
+//        }
+//    }
 }

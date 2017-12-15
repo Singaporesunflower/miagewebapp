@@ -47,6 +47,7 @@ public class SpringBusinessConfig {
         return emfb;
     }
     
+    // TODO change DB
 //    @Bean
 //    public DataSource dataSource() {
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();

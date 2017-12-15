@@ -9,5 +9,6 @@ public interface PersonService {
     void delete(Long id);
     List<Person> findAll();
     Person findById(Long id);
+    Person findByLogin(String login);
     List<Person> findByFirstNameAndLastName(String firstName, String lastName);
 }

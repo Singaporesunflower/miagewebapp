@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
+
+<head th:include="fragments/common :: [//head]" />
+
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1 th:text="#{accessDenied}">Access denied</h1>
+		</div>
+
+		<div class="page-body">
+		</div>
+
+		<div class="page-footer">
+			<div class="col-sm-offset-2 col-sm-10">
+				<a th:href="@{/}" th:text="#{exit}" class="btn btn-default" >Exit</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Scripts includes are placed at the end of the document so the pages load faster -->
+	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>
+</body>
+</html>

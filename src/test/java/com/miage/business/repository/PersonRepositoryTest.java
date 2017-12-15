@@ -54,7 +54,7 @@ public class PersonRepositoryTest {
 	@Before
 	public void initObjects() {
 		if (CollectionUtils.isEmpty(personRepository.findByFirstNameAndLastName(FIRST_NAME, LAST_NAME))) {
-			personRepository.save(new Person(FIRST_NAME, LAST_NAME));
+			personRepository.save(new Person("login", "password", FIRST_NAME, LAST_NAME, "email"));
 		}
 
 		if (roleRepository.findByName(ROLE1) == null) {
