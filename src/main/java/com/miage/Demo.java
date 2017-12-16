@@ -91,11 +91,17 @@ public class Demo implements CommandLineRunner {
 		}
 		
 		// Product categories
-		Category categoryFruits =  categoryService.findByName("Fruits");
-		if (categoryFruits == null) {
-			final Category category = new Category("Fruits");
+		addCategory("Fruit");
+		addCategory("Légume");
+		addCategory("Boisson");
+	}
+	
+	private void addCategory(String name) {
+		Category category =  categoryService.findByName(name);
+		if (category == null) {
+			category = new Category(name);
 			categoryService.save(category);
-			LOGGER.info("Category created");
+			LOGGER.info("Category " + name + " created");
 		}
 	}
 }

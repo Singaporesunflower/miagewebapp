@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.miage.business.model.Product;
+import com.miage.business.service.CategoryService;
 import com.miage.business.service.ProductService;
 
 @Controller
@@ -24,9 +25,12 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
 	// TODO Enable method security
-	//@Secured("ADMIN") // securedEnabled = true
-	//@PreAuthorize("hasAuthority('ADMIN')") // prePostEnabled = true
+//	@Secured("ADMIN")
+//	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
 	public String findAll(Model model) {
 		model.addAttribute("products", productService.findAll());
@@ -35,14 +39,16 @@ public class ProductController {
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
+		model.addAttribute("categories", categoryService.findAll());
 		model.addAttribute("product", new Product());
 		return "product/form";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String submitCreate(@Valid @ModelAttribute Product product, BindingResult bindingResult) {
+	public String submitCreate(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("categories", categoryService.findAll());
             return "product/form";
         }
 
@@ -52,14 +58,16 @@ public class ProductController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String editForm(@RequestParam("id") Long id, Model model) {
+		model.addAttribute("categories", categoryService.findAll());
 		model.addAttribute("product", productService.findById(id));
 		return "product/form";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String submitEditForm(@Valid @ModelAttribute Product product, BindingResult bindingResult) {
+	public String submitEditForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("categories", categoryService.findAll());
             return "product/form";
         }
 		

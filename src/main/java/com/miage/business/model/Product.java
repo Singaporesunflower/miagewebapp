@@ -24,7 +24,7 @@ public class Product implements Serializable {
 	@Size(min = 2, max = 20)
 	private String name;
 	
-//	@NotNull
+	@NotNull
 	@ManyToOne
 //	@JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
 	private Category category;

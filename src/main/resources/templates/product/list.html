@@ -18,6 +18,7 @@
 	    <ul>
 	    	<li th:each="product : ${products}">
 	    		<span th:text="${product.name}"></span>
+	    		<span th:text="${product.category.name}"></span>
 	    		<a th:href="@{/product/edit(id=${product.id})}"><i class="fa fa-pencil"></i></a>
 	    		<a th:href="@{'/product/delete/' + ${product.id}}"><i class="fa fa-remove"></i></a>
 	    	</li>

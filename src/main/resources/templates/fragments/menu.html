@@ -6,7 +6,7 @@
 				<li class="nav-item">
 				    <a th:href="@{/hello}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/hello')} ? 'nav-link active' : 'nav-link'">Hello</a>
 				</li>
-				<!-- TODO Enable method security -->
+				<!-- TODO Enable SpringSecurity -->
 				<li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
 				    <a th:href="@{/person}" th:text="#{persons}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/person')} ? 'nav-link active' : 'nav-link'" />
 				</li>
@@ -31,18 +31,18 @@
 		</div>
 		
 		<!-- TODO Enable SpringSecurity -->
-<!-- 		<div sec:authorize="!isAnonymous()"> -->
-<!-- 			<div class="col-sm"> -->
-<!-- 				<div class="dropdown"> -->
-<!-- 		  			<button th:text="${#authentication.getPrincipal().getFirstname()} + ' ' + ${#authentication.getPrincipal().getLastname()}" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" /> -->
-<!-- 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
-<!-- 		    			<a class="dropdown-item" href="#" th:text="#{profile}" /> -->
-<!-- 						<form th:action="@{/logout}" method="post" class="px-2 py-1"> -->
-<!-- 			        		<button type="submit" class="btn btn-link" th:text="#{signOut}" /> -->
-<!-- 	        			</form> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
+		<div sec:authorize="!isAnonymous()">
+			<div class="col-sm">
+				<div class="dropdown">
+		  			<button th:text="${#authentication.getPrincipal().getFirstname()} + ' ' + ${#authentication.getPrincipal().getLastname()}" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		    			<a class="dropdown-item" href="#" th:text="#{profile}" />
+						<form th:action="@{/logout}" method="post" class="px-2 py-1">
+			        		<button type="submit" class="btn btn-link" th:text="#{signOut}" />
+	        			</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

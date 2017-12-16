@@ -63,10 +63,10 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/home").setViewName("home");
         
         // TODO enable SpringSecurity
-//        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/login").setViewName("login");
         
         // TODO enable Exception handling
-//        registry.addViewController("/403").setViewName("error/403");
+        registry.addViewController("/403").setViewName("error/403");
     }
 	
 	// Resources
@@ -127,7 +127,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		exceptionResolver.setExceptionMappings(exceptionMappings);
 
 		// TODO enable Exception handling
-//		exceptionResolver.setExcludedExceptions(AccessDeniedException.class);
+		exceptionResolver.setExcludedExceptions(AccessDeniedException.class);
 		
 		// Map status code with view
 		Properties statusCodes = new Properties();
@@ -160,9 +160,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 
 		// TODO enable SpringSecurity
 		// To use <sec:> namespace in Thymeleaf
-//		Set<IDialect> additionalDialects = new HashSet<IDialect>();
-//	    additionalDialects.add(new SpringSecurityDialect());
-//		templateEngine.setAdditionalDialects(additionalDialects);
+		Set<IDialect> additionalDialects = new HashSet<IDialect>();
+	    additionalDialects.add(new SpringSecurityDialect());
+		templateEngine.setAdditionalDialects(additionalDialects);
 		
 		return templateEngine;
 	}
@@ -175,29 +175,29 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 	}
 	
 	// TODO enable SSL
-//    @Bean
-//    public EmbeddedServletContainerFactory servletContainer() {
-//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-//        tomcat.addAdditionalTomcatConnectors(createSslConnector());
-//        return tomcat;
-//    }
-//    private Connector createSslConnector() {
-//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-//        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-//        try {
-//            File keystore = new ClassPathResource("keystore.p12").getFile();
-//            connector.setScheme("https");
-//            connector.setSecure(true);
-//            connector.setPort(8443);
-//            protocol.setSSLEnabled(true);
-//            protocol.setKeystoreFile(keystore.getAbsolutePath());
-//            protocol.setKeystorePass("Passw0rd");
-//            protocol.setKeystoreType("PKCS12");
-//            protocol.setKeyAlias("tomcat");
-//            return connector;
-//        }
-//        catch (IOException ex) {
-//            throw new IllegalStateException("can't access keystore: [keystore] or truststore: [" + "keystore" + "]", ex);
-//        }
-//    }
+    @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+        tomcat.addAdditionalTomcatConnectors(createSslConnector());
+        return tomcat;
+    }
+    private Connector createSslConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
+        try {
+            File keystore = new ClassPathResource("keystore.p12").getFile();
+            connector.setScheme("https");
+            connector.setSecure(true);
+            connector.setPort(8443);
+            protocol.setSSLEnabled(true);
+            protocol.setKeystoreFile(keystore.getAbsolutePath());
+            protocol.setKeystorePass("Passw0rd");
+            protocol.setKeystoreType("PKCS12");
+            protocol.setKeyAlias("tomcat");
+            return connector;
+        }
+        catch (IOException ex) {
+            throw new IllegalStateException("can't access keystore: [keystore] or truststore: [" + "keystore" + "]", ex);
+        }
+    }
 }
