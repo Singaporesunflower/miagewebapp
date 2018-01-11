@@ -124,7 +124,6 @@ function submitModalCategory(e, id) {
 		url: action,
 		type: method,
 		contentType : 'application/json; charset=utf-8',
-		mimeType : 'application/json',
 		dataType: 'json',
 		data: JSON.stringify(data),
 		beforeSend: function(xhr) {

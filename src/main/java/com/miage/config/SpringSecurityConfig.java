@@ -24,40 +24,40 @@ import com.miage.web.exception.CustomAccessDeniedHandler;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SpringSecurityConfig {
 
-    @Configuration
-    @Order(1)
-    public static class RestSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-		// TODO enable Users in DB
-		@Autowired
-		private SecurityUserDetailsService userDetailsService;
-		
-        protected void configure(HttpSecurity http) throws Exception {
-        	http.authorizeRequests().antMatchers("/rest/restcategory*").access("hasAuthority('USER')").and().httpBasic();
-            http.authorizeRequests().antMatchers("/rest/**").authenticated().and().httpBasic();
-        }
-        
-		// TODO enable more things : CSRF ?
-		@Bean
-		@Override
-		public AuthenticationManager authenticationManagerBean() throws Exception {
-			return super.authenticationManagerBean();
-		}
-		
-    	// TODO enable Users in DB
-//    	@Autowired
-//    	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//    		auth
-//    			.inMemoryAuthentication()
-//    		 		.withUser("user").password("user").roles("USER")
-//    		 		.and().withUser("admin").password("admin").roles("ADMIN");
+//    @Configuration
+//    @Order(1)
+//    public static class RestSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+//		// TODO enable Users in DB
+//		@Autowired
+//		private SecurityUserDetailsService userDetailsService;
+//		
+//        protected void configure(HttpSecurity http) throws Exception {
+//        	http.authorizeRequests().antMatchers("/rest/restcategory*").access("hasAuthority('USER')").and().httpBasic();
+//            http.authorizeRequests().antMatchers("/rest/**").authenticated().and().httpBasic();
+//        }
+//        
+//		// TODO enable more things : CSRF ?
+//		@Bean
+//		@Override
+//		public AuthenticationManager authenticationManagerBean() throws Exception {
+//			return super.authenticationManagerBean();
+//		}
+//		
+//    	// TODO enable Users in DB
+////    	@Autowired
+////    	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+////    		auth
+////    			.inMemoryAuthentication()
+////    		 		.withUser("user").password("user").roles("USER")
+////    		 		.and().withUser("admin").password("admin").roles("ADMIN");
+////    	}
+//    	
+//    	// TODO enable Users in DB
+//    	@Override
+//    	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//    		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 //    	}
-    	
-    	// TODO enable Users in DB
-    	@Override
-    	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-    	}
-    }
+//    }
     
 	@Configuration
 	public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
@@ -84,6 +84,8 @@ public class SpringSecurityConfig {
 			http.authorizeRequests().antMatchers("/product*").access("hasAuthority('USER')");
 			http.authorizeRequests().antMatchers("/category*").access("hasAuthority('USER')");
 	
+			http.authorizeRequests().antMatchers("/rest/restcategory*").access("hasAuthority('USER')");
+			
 			http.authorizeRequests().antMatchers("/login/**").permitAll();
 			http.formLogin().loginPage("/login").permitAll();
 			http.logout().logoutSuccessUrl("/");
