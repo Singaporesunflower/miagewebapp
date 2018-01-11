@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.miage.business.exception.ServiceException;
 import com.miage.business.model.Category;
 import com.miage.business.repository.CategoryRepository;
-import com.miage.business.repository.impl.PersonRepositoryImpl;
 import com.miage.business.service.CategoryService;
 
 @Service
@@ -22,7 +21,14 @@ public class CategoryServiceImpl implements CategoryService {
 	CategoryRepository categoryRepository;
 
 	@Override
-	public Category save(Category entity) throws ServiceException {
+	public Category create(Category entity) throws ServiceException {
+		return categoryRepository.save(entity);
+	}
+	
+	@Override
+	public Category update(Long id, Category entity) throws ServiceException {
+		final Category category = this.categoryRepository.findOne(id);
+		category.setName(entity.getName());
 		return categoryRepository.save(entity);
 	}
 	

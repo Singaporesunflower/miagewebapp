@@ -1,0 +1,38 @@
+<div id="categoryModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" th:switch="${category.id}">
+					<span th:case="null" th:text="#{createCategory}">Create category</span>
+					<span th:case="*" th:text="#{editCategory}">Edit category</span>
+				</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+
+				<form id="categoryModalForm" th:object="${category}" class="form-horizontal" role="form">
+				
+					<input  type="hidden" th:field="*{id}" />
+					
+					<div class="form-group">
+						<label for="name" th:text="#{name}" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" th:field="*{name}" th:placeholder="#{name}"/>
+							<span th:id="err-name" />
+						</div>
+					</div>
+						
+				</form>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" th:onclick="|javascript:submitModalCategory(event, ${category.id})|" class="btn btn-success">
+					<i class="fa fa-arrow-circle-right fa-lg"></i> <span th:text="#{submit}">Submit</span>
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<i class="fa fa-times"></i> <span th:text="#{close}">Close</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

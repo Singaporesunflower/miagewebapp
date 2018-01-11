@@ -1,4 +1,4 @@
-package com.miage.web;
+package com.miage.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,15 +14,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+import com.miage.security.SecurityUserDetailsService;
 import com.miage.web.exception.CustomAccessDeniedHandler;
-import com.miage.web.security.SecurityUserDetailsService;
 
 @Configuration
 // TODO enable SpringSecurity
 @EnableWebSecurity
 // TODO Enable method security
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// TODO enable Users in DB
 	@Autowired
@@ -45,9 +45,11 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/home*").permitAll();
 		http.authorizeRequests().antMatchers("/person*").access("hasAuthority('ADMIN')");
 		http.authorizeRequests().antMatchers("/product*").access("hasAuthority('USER')");
+		http.authorizeRequests().antMatchers("/category*").access("hasAuthority('USER')");
 
-		http.authorizeRequests().antMatchers("/login/**").permitAll();
+//		http.authorizeRequests().antMatchers("/rest/restcategory*").access("hasAuthority('USER')");
 		
+		http.authorizeRequests().antMatchers("/login/**").permitAll();
 		http.formLogin().loginPage("/login").permitAll();
 		http.logout().logoutSuccessUrl("/");
 

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	th:with="localeLanguage=${#locale.language}" th:lang="${localeLanguage}">
+	
+<head th:include="fragments/common :: [//head]" />
+
+<body>
+
+	<div th:replace="fragments/menu" ></div>
+
+	<div class="container">	
+	
+		<h1 th:text="#{categories}">Categories</h1>
+	    <button type="button" th:text="#{createCategory}" onclick="javascript:createModalCategory(event)" class="btn btn-success">Create</button>
+	    <br />
+	    <br />
+	    
+	    <span>Exemple avec Spring MVC</span>
+	    <ul>
+	    	<li th:each="category : ${categories}">
+	    		<span th:text="${category.name}"></span>
+	    		<a th:href="@{/category/edit(id=${category.id})}"><i class="fa fa-pencil"></i></a>
+	    		<a th:href="@{'/category/delete/' + ${category.id}}"><i class="fa fa-remove"></i></a>
+	    	</li>
+	    </ul>
+	    
+	    <span>Exemple avec Spring REST</span>
+	    <ul id="categoryList">
+	    	
+	    </ul>
+	    
+    </div>
+	    
+	<!--/* Footer */-->
+	<div th:replace="fragments/common :: [//div[@class='footer']]"></div>
+	
+	<!--/* Category modal form holder */-->
+	<div id="categoryModalHolder"></div>
+	   	
+	<!--/* Scripts includes are placed at the end of the document so the pages load faster */-->
+	<div th:replace="fragments/common :: [//div[@id='scripts']]"></div>
+	<script th:inline="javascript" th:src="@{/static/js/category.js}">
+// 		var categoriesUrl = /*[[@{'/rest/category'}]]*/ 'defaultURL';
+	</script>
+
+</body>
+</html>

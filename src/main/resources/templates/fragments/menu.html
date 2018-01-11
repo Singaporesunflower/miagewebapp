@@ -6,12 +6,15 @@
 				<li class="nav-item">
 				    <a th:href="@{/hello}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/hello')} ? 'nav-link active' : 'nav-link'">Hello</a>
 				</li>
-				<!-- TODO Enable SpringSecurity -->
+				<!--/* TODO Enable SpringSecurity */-->
 				<li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
 				    <a th:href="@{/person}" th:text="#{persons}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/person')} ? 'nav-link active' : 'nav-link'" />
 				</li>
 				<li sec:authorize="hasAuthority('USER')" class="nav-item">
 				    <a th:href="@{/product}" th:text="#{products}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/product')} ? 'nav-link active' : 'nav-link'" />
+				</li>
+				<li sec:authorize="hasAuthority('USER')" class="nav-item">
+				    <a th:href="@{/category}" th:text="#{categories}" th:class="${#strings.startsWith(#httpServletRequest.requestURI, '/category')} ? 'nav-link active' : 'nav-link'" />
 				</li>
 			</ul>
 		</div>
@@ -30,7 +33,7 @@
 			</ul>
 		</div>
 		
-		<!-- TODO Enable SpringSecurity -->
+		<!--/* TODO Enable SpringSecurity */-->
 		<div sec:authorize="!isAnonymous()">
 			<div class="col-sm">
 				<div class="dropdown">

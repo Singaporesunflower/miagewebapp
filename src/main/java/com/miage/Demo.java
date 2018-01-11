@@ -100,7 +100,7 @@ public class Demo implements CommandLineRunner {
 		Category category =  categoryService.findByName(name);
 		if (category == null) {
 			category = new Category(name);
-			categoryService.save(category);
+			categoryService.create(category);
 			LOGGER.info("Category " + name + " created");
 		}
 	}

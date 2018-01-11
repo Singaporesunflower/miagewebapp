@@ -2,6 +2,8 @@ package com.miage.web.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,8 @@ import com.miage.business.service.ProductService;
 @RequestMapping("/product")
 public class ProductController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+	
 	@Autowired
 	private ProductService productService;
 	
@@ -32,14 +36,14 @@ public class ProductController {
 //	@Secured("ADMIN")
 //	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
-	public String findAll(Model model) {
-		model.addAttribute("products", productService.findAll());
+	public String getAll(Model model) {
+		model.addAttribute("products", this.productService.findAll());
 		return "product/list";
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("categories", categoryService.findAll());
+		model.addAttribute("categories", this.categoryService.findAll());
 		model.addAttribute("product", new Product());
 		return "product/form";
 	}
@@ -48,7 +52,7 @@ public class ProductController {
 	public String submitCreate(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("categories", categoryService.findAll());
+			model.addAttribute("categories", this.categoryService.findAll());
             return "product/form";
         }
 
@@ -57,17 +61,17 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String editForm(@RequestParam("id") Long id, Model model) {
-		model.addAttribute("categories", categoryService.findAll());
-		model.addAttribute("product", productService.findById(id));
+	public String edit(@RequestParam("id") Long id, Model model) {
+		model.addAttribute("categories", this.categoryService.findAll());
+		model.addAttribute("product", this.productService.findById(id));
 		return "product/form";
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String submitEditForm(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
+	public String submitEdit(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model) {
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("categories", categoryService.findAll());
+			model.addAttribute("categories", this.categoryService.findAll());
             return "product/form";
         }
 		
@@ -76,7 +80,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String deleteProduct(@PathVariable("id") Long id) {
+	public String delete(@PathVariable("id") Long id) {
 		productService.delete(id);
 		return "redirect:/product";
 	}

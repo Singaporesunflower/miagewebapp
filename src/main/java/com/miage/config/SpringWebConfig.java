@@ -1,4 +1,4 @@
-package com.miage.web;
+package com.miage.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +25,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

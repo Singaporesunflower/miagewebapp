@@ -1,4 +1,4 @@
-package com.miage.business;
+package com.miage.config;
 
 import java.util.HashMap;
 import java.util.Map;

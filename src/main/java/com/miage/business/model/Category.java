@@ -13,6 +13,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Category implements Serializable {
@@ -26,6 +28,7 @@ public class Category implements Serializable {
 	private String name;
 	
 	@OneToMany(mappedBy="category")
+	@JsonIgnore
 	private Collection<Product> products;
 	
 	public Category() {

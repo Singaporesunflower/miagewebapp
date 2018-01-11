@@ -1,4 +1,4 @@
-package com.miage.web.security;
+package com.miage.security;
 
 import java.util.Collection;
 
