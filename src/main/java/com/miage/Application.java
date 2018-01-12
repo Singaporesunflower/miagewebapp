@@ -88,8 +88,8 @@ public class Application implements WebApplicationInitializer {
 		characterEncodingFilter.addMappingForUrlPatterns(null, false, MAPPING_REST);
 		
 		//
-		FilterRegistration hiddenHttpMethodFilter = container.addFilter("HiddenHttpMethodFilter", HiddenHttpMethodFilter.class);
-		hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, MAPPING_REST);
+//		FilterRegistration hiddenHttpMethodFilter = container.addFilter("HiddenHttpMethodFilter", HiddenHttpMethodFilter.class);
+//		hiddenHttpMethodFilter.addMappingForUrlPatterns(null, false, MAPPING_REST);
 	}
 
 }
